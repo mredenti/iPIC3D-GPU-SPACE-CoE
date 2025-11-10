@@ -1680,6 +1680,8 @@ void Particles3Dcomm::sort_particles_serial_AoS()
       //
       _pclstmp[outpidx] = pcl;
     }
+    // finalize logical size BEFORE swap
+    _pclstmp.setSize(nop);
     // swap the tmp particle memory with the official particle memory
     {
       // if using accessors rather than transposition,
