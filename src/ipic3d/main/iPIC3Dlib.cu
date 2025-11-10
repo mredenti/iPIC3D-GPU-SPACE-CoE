@@ -240,8 +240,11 @@ int c_Solver::Init(int argc, char **argv) {
       outputPart[i].reserve_remaining_particle_IDs();
 
       // Sort before first device copy
-      outputPart[i].sort_particles_serial_AoS();   // or sort_particles_parallel(...)
-
+      std::cout << "[DEBUG] species " << i
+                << " before sort N=" << outputPart[i].getNOP() << std::endl;
+      outputPart[i].sort_particles_serial_AoS();
+      std::cout << "[DEBUG] species " << i
+                << " after  sort N=" << outputPart[i].getNOP() << std::endl;
     }
   }
 
