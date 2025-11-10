@@ -242,7 +242,7 @@ int c_Solver::Init(int argc, char **argv) {
       // Sort before first device copy
       std::cout << "[DEBUG] species " << i
                 << " before sort N=" << outputPart[i].getNOP() << std::endl;
-      outputPart[i].sort_particles_serial_AoS();
+      outputPart[i].sort_particles_serial();
       std::cout << "[DEBUG] species " << i
                 << " after  sort N=" << outputPart[i].getNOP() << std::endl;
     }
