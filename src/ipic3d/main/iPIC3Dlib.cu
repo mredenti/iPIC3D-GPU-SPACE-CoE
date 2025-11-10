@@ -238,6 +238,10 @@ int c_Solver::Init(int argc, char **argv) {
       else if (col->getCase()=="GEMDoubleHarris")  	outputPart[i].maxwellianDoubleHarris(EMf);
       else                                  		outputPart[i].maxwellian(EMf);
       outputPart[i].reserve_remaining_particle_IDs();
+
+      // Sort before first device copy
+      outputPart[i].sort_particles_serial_AoS();   // or sort_particles_parallel(...)
+
     }
   }
 
@@ -363,7 +367,7 @@ int c_Solver::initCUDA(){
       // the constructor will copy particles from host to device
       pclsArrayHostPtr[i] = newHostPinnedObject<particleArrayCUDA>(outputPart+i, 1.4, streams[i]); // use the oputputPart as the initial pcls
       pclsArrayHostPtr[i]->setInitialNOP(pclsArrayHostPtr[i]->getNOP());
-      pclsArrayCUDAPtr[i] = pclsArrayHostPtr[i]->copyToDevice();
+      pclsArrayCUDAPtr[i] = pclsArrayHostPtr[i]->copyToDevice(); // full copy to device happens once here
 
       departureArrayHostPtr[i] = newHostPinnedObject<departureArrayType>(pclsArrayHostPtr[i]->getSize()); // same length
       departureArrayCUDAPtr[i] = departureArrayHostPtr[i]->copyToDevice();
