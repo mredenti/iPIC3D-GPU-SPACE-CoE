@@ -1630,8 +1630,8 @@ void Particles3Dcomm::sort_particles_serial_AoS()
 {
   convertParticlesToAoS();
 
-  _pclstmp.setSize(_pcls.size());
   _pclstmp.reserve(_pcls.size());
+  _pclstmp.setSize(_pcls.size());
   {
     numpcls_in_bucket->setall(0);
     // iterate through particles and count where they will go
