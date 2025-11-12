@@ -1630,6 +1630,13 @@ void Particles3Dcomm::sort_particles_serial_AoS()
 {
   convertParticlesToAoS();
 
+  std::cout << "[SORT-serial] before reserve "
+              << " _pcls.size="    << _pcls.size()
+              << " _pcls.cap="     << _pcls.capacity()
+              << " _pclstmp.size=" << _pclstmp.size()
+              << " _pclstmp.cap="  << _pclstmp.capacity()
+              << std::endl;
+              
   _pclstmp.reserve(_pcls.size());
   _pclstmp.setSize(_pcls.size());
   {
