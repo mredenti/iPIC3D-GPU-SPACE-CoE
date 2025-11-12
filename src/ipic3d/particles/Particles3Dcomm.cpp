@@ -1630,6 +1630,7 @@ void Particles3Dcomm::sort_particles_serial_AoS()
 {
   convertParticlesToAoS();
 
+  _pclstmp.setSize(_pcls.size());
   _pclstmp.reserve(_pcls.capacity());
   {
     numpcls_in_bucket->setall(0);
@@ -1680,8 +1681,6 @@ void Particles3Dcomm::sort_particles_serial_AoS()
       //
       _pclstmp[outpidx] = pcl;
     }
-    // finalize logical size BEFORE swap
-    _pclstmp.setSize(nop);
     // swap the tmp particle memory with the official particle memory
     {
       // if using accessors rather than transposition,
