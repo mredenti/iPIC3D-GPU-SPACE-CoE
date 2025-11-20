@@ -124,7 +124,8 @@ __global__ void momentKernelStayed(momentParameter* momentParam,
         for (int m = 0; m < 10; m++)    // 10 densities
         for (int c = 0; c < 8; c++)     // 8 grid nodes
         {
-            atomicAdd(&moments[oneDensity*m + posIndex[c]], velmoments[m] * weights[c]); // device scope atomic, should be system scope if p2p direct access
+            //atomicAdd(&moments[oneDensity*m + posIndex[c]], velmoments[m] * weights[c]); // device scope atomic, should be system scope if p2p direct access
+            moments[oneDensity*m + posIndex[c]] += velmoments[m] * weights[c]; // PERF TEST: non-atomic update
         }
     }
 }
