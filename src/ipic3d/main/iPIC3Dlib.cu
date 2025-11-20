@@ -303,6 +303,10 @@ int c_Solver::Init(int argc, char **argv) {
   }
   pclNumCSV << "species" << ns-1 << std::endl;
 
+  for (int i = 0; i < ns; i++) {
+    outputPart[i].PrintPositionsWithCell(); // new function to print particle positions with cell indices
+  }
+
   initCUDA();
 
   my_clock = new Timing(myrank);
