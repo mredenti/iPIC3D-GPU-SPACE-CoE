@@ -21,8 +21,6 @@
 #include "asserts.h"
 #include "Particles3D.h"
 
-#include <cstdio>
-
 #include "cudaTypeDef.cuh"
 #include "momentKernel.cuh"
 #include "gridCUDA.cuh"
@@ -31,7 +29,7 @@
 
 using commonType = cudaTypeDouble; // calculation type
 
-#define MOMENT_KERNEL_DEBUG_PRINTF(...) printf(__VA_ARGS__)
+
 
 __global__ void momentKernelStayed(momentParameter* momentParam,
                                 grid3DCUDA* grid,
@@ -123,16 +121,6 @@ __global__ void momentKernelStayed(momentParameter* momentParam,
         posIndex[6] = toOneDimIndex(nxn, nyn, nzn, ix-1, iy-1, iz);
         posIndex[7] = toOneDimIndex(nxn, nyn, nzn, ix-1, iy-1, iz-1);
         uint32_t oneDensity = nxn * nyn * nzn;
-
-        MOMENT_KERNEL_DEBUG_PRINTF(
-            "momentKernelStayed block=(%d,%d,%d) thread=(%d,%d,%d) tidx=%u pidx=%u indices="
-            "[%u,%u,%u,%u,%u,%u,%u,%u] ix=%d iy=%d iz=%d\n",
-            blockIdx.x, blockIdx.y, blockIdx.z,
-            threadIdx.x, threadIdx.y, threadIdx.z,
-            tidx, pidx,
-            posIndex[0], posIndex[1], posIndex[2], posIndex[3], posIndex[4], posIndex[5], posIndex[6], posIndex[7],
-            ix, iy, iz);
-
         for (int m = 0; m < 10; m++)    // 10 densities
         for (int c = 0; c < 8; c++)     // 8 grid nodes
         {
