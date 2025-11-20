@@ -1596,6 +1596,32 @@ void Particles3Dcomm::Print() const
   }
   cout << endl;
 }
+
+/** print particle positions along with their cell coordinates */
+void Particles3Dcomm::PrintPositionsWithCell() const
+{
+  cout << endl;
+  cout << "Particles with cell coordinates for species " << get_species_num() << endl;
+  cout << "Subgrid (" << vct->getCoordinates(0) << "," << vct->getCoordinates(1) << "," << vct->getCoordinates(2) << ")" << endl;
+
+  for (int i = 0; i < _pcls.size(); i++)
+  {
+    const SpeciesParticle& pcl = _pcls[i];
+    int cx, cy, cz;
+    grid->get_safe_cell_coordinates(cx, cy, cz, pcl.get_x(), pcl.get_y(), pcl.get_z());
+    const int cell_id = cx * (nyc * nzc) + cy * nzc + cz;
+
+    cout << "Particle #" << i
+         << " pos=(" << pcl.get_x() << ", " << pcl.get_y() << ", " << pcl.get_z() << ")"
+         << " cell=(" << cx << ", " << cy << ", " << cz << ")"
+         << " cell_id=" << cell_id
+         << " id=" << pcl.get_ID()
+         << endl;
+  }
+
+  cout << endl;
+}
+
 /** print just the number of particles */
 void Particles3Dcomm::PrintNp()  const
 {
